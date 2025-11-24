@@ -18,9 +18,9 @@ python setup.py develop
 
 ## :rocket: Training and Testing 
 ### Data Preparation
-- Download the training dataset [DIV2K](https://data.vision.ee.ethz.ch/cvl/DIV2K/) and put them in the folder `./datasets`.
-- Download the testing data (Set5 + Set14 + BSD100 + Urban100 + Manga109 [[Download](https://drive.google.com/file/d/1_FvS_bnSZvJWx9q4fNZTR8aS15Rb0Kc6/view?usp=sharing)]) and put them in the folder `./datasets`.
-- It's recommended to refer to the data preparation from [BasicSR](https://github.com/XPixelGroup/BasicSR/blob/master/docs/DatasetPreparation.md) for faster data reading speed.
+- Download the training dataset [DIV2K](https://pan.baidu.com/s/1d9bxtbGJcZpcp2xRpYTHmg) (提取码: maan) and put them in the folder `./datasets`.
+- Download the testing data (Set5 + Set14 + BSD100 + Urban100 + Manga109 [[Download](https://pan.baidu.com/s/1SAQIEvNbWUziyNwZ0qj8tQ)]) (提取码: maan) and put them in the folder `./datasets`.
+- It's recommended to refer to the data preparation from [BasicSR](https://github.com/chrimy666999/MAANet/blob/main/docs/DatasetPreparation.md) for faster data reading speed.
 
 ### Training
 Run the following commands for training:
