@@ -1,0 +1,164 @@
+name: MAANet_500K_DIV2K_X2
+model_type: SRModel
+scale: 2
+num_gpu: 1  # set num_gpu: 0 for cpu mode
+manual_seed: 3407
+
+# dataset and data loader settings
+datasets:
+  train:
+    
+    name: DIV2K
+    type: PairedImageDataset
+    dataroot_gt: datasets/DIV2K/DIV2K_train_HR_sub
+    dataroot_lq: datasets/DIV2K/DIV2K_train_LR_bicubic/X2_sub
+    filename_tmpl: '{}'
+    io_backend:
+      type: disk
+
+    # name: DIV2K
+    # type: PairedImageDataset
+    # dataroot_gt: datasets/DIV2K/DIV2K_train_HR_sub.lmdb
+    # dataroot_lq: datasets/DIV2K/DIV2K_train_LR_bicubic_X2_sub.lmdb
+    # filename_tmpl: '{}x2'
+    # io_backend:
+    #   type: lmdb
+
+
+    gt_size: 128
+    use_hflip: true
+    use_rot: true
+
+    # data loader
+    use_shuffle: true
+    num_worker_per_gpu: 8
+    batch_size_per_gpu: 32
+    dataset_enlarge_ratio: 1
+    prefetch_mode: cuda
+    pin_memory: true
+
+  val_1:
+    dataroot_gt: datasets/benchmark/Set5/HR
+    dataroot_lq: datasets/benchmark/Set5/LR_bicubic/X2
+    filename_tmpl: '{}x2'
+    io_backend:
+      type: disk
+    name: Set5
+    type: PairedImageDataset
+
+  val_2: # the 2st test dataset
+    name: Set14
+    type: PairedImageDataset
+    dataroot_gt: datasets/benchmark/Set14/HR
+    dataroot_lq: datasets/benchmark/Set14/LR_bicubic/X2
+    filename_tmpl: '{}x2'
+    io_backend:
+      type: disk
+
+  val_3: # the 3st test dataset
+    name: B100
+    type: PairedImageDataset
+    dataroot_gt: datasets/benchmark/B100/HR
+    dataroot_lq: datasets/benchmark/B100/LR_bicubic/X2
+    filename_tmpl: '{}x2'
+    io_backend:
+      type: disk
+
+  val_4: # the 4st test dataset
+    name: Urban100
+    type: PairedImageDataset
+    dataroot_gt: datasets/benchmark/Urban100/HR
+    dataroot_lq: datasets/benchmark/Urban100/LR_bicubic/X2
+    filename_tmpl: '{}x2'
+    io_backend:
+      type: disk
+
+  val_5: # the 5st test dataset
+    name: Manga109
+    type: PairedImageDataset
+    dataroot_gt: datasets/benchmark/Manga109/HR
+    dataroot_lq: datasets/benchmark/Manga109/LR_bicubic/X2
+    filename_tmpl: '{}_LRBI_x2'
+    io_backend:
+      type: disk
+
+# network structures
+network_g:
+  type: MAANet
+  upscaling_factor: 2
+
+  dim: 36
+  n_blocks: 8
+
+  mlp_dim: 72
+  heads: 6
+  window_size: 16
+  qk_dim: 36           
+  
+
+# path
+path:
+  pretrain_network_g: ~
+  strict_load_g: false
+  resume_state: ~
+
+# training settings
+train:
+  ema_decay: 0.999
+  optim_g:
+    type: Adam
+    lr: !!float 5e-4  
+    weight_decay: 0
+    betas: [0.9, 0.99]
+
+  scheduler:
+    type: CosineAnnealingRestartLR
+    periods: [500000]
+    restart_weights: [1]
+    eta_min: !!float 1e-5
+
+  total_iter: 500000
+  warmup_iter: -1  # no warm up
+
+  # losses
+  pixel_opt:
+    type: L1Loss
+    loss_weight: 1.0
+    reduction: mean
+
+  fft_opt:
+    type: FFTLoss
+    loss_weight: 0.05
+    reduction: mean
+
+# validation settings
+val:
+  val_freq: !!float 2500
+  save_img: False
+  pbar: False
+
+  metrics:
+    psnr:
+      type: calculate_psnr
+      crop_border: 2
+      test_y_channel: true
+      better: higher  # the higher, the better. Default: higher
+    ssim:
+      type: calculate_ssim
+      crop_border: 2
+      test_y_channel: true
+      better: higher  # the higher, the better. Default: higher
+
+# logging settings
+logger:
+  print_freq: 100
+  save_checkpoint_freq: !!float 2500
+  use_tb_logger: true
+  wandb:
+    project: ~
+    resume_id: ~
+
+# dist training settings
+dist_params:
+  backend: nccl
+  port: 29500
