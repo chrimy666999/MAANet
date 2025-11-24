@@ -1,4 +1,4 @@
-### 📖 MAANet
+### 📖 MAANet: A Lightweight Multi-Axis Adaptation Network for Efficient Image Super-Resolution
 
 ## :hammer: Requirements and Installation
 > - Python 3.9, PyTorch >= 2.0
