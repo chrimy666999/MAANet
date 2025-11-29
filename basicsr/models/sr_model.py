@@ -168,13 +168,6 @@ class SRModel(BaseModel):
                 self.net_g.train()
 
     def test_selfensemble(self):
-        # -----------------------------------------------------------
-        #  这是您提供的完整的 test_selfensemble 代码
-        #  我们只需要将它作为一个方法添加到 SRModel 类中
-        # -----------------------------------------------------------
-        # 8 augmentations
-        # modified from https://github.com/thstkdgus35/EDSR-PyTorch
-
         def _transform(v, op):
             v2np = v.data.cpu().numpy()
             if op == 'v':
@@ -200,7 +193,6 @@ class SRModel(BaseModel):
         else:
             self.net_g.eval()
             with torch.no_grad():
-                # 注意：这里原代码有一个小笔误，应为 self.net_g
                 out_list = [self.net_g(aug) for aug in lq_list] 
             self.net_g.train()
 
