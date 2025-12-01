@@ -1,5 +1,8 @@
 # 📖 MAANet: A Lightweight Multi-Axis Adaptation Network for Efficient Image Super-Resolution
 
+## :brain: Overview framework
+<p align="center"> <img width="800" src="./assets/MAANet.png"> </p>
+
 ## :hammer: Requirements and Installation
 > - Python 3.9, PyTorch >= 2.0
 > - BasicSR 1.4.2
