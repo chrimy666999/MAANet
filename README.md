@@ -1,7 +1,7 @@
 # 📖 MAANet: A Lightweight Multi-Axis Adaptation Network for Efficient Image Super-Resolution
 
 ## :brain: Overview framework
-<p align="center"> <img width="800" src="./assets/MAANet.png"> </p>
+<p align="center"> <img width="100%" src="./assets/MAANet.png"> </p>
 
 ## :hammer: Requirements and Installation
 > - Python 3.9, PyTorch >= 2.0
@@ -58,7 +58,7 @@ python basicsr/test.py -opt options/test/test_benchmark_X4.yml
 - The test results will be in './results'.
 
 ## :bar_chart: Efficient SR Results
-<p align="center"> <img width="800" src="./assets/sr.png"> </p>
+<p align="center"> <img width="100%" src="./assets/sr.png"> </p>
 
 ## 🥰 Acknowledgement
 This code is based on [BasicSR](https://github.com/XPixelGroup/BasicSR) toolbox. Thanks for the awesome work.
